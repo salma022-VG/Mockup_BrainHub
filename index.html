@@ -1066,6 +1066,63 @@
     60% { opacity:1; transform:translateY(-55px) scale(1.08); }
     100%{ opacity:0; transform:translateY(-90px) scale(0.9); }
   }
+
+  /* ── Pro Studio modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(7,11,20,0.75);
+    display: none; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.active { display: flex; }
+  .pro-modal {
+    width: min(520px, 100%);
+    background: rgba(15,22,40,0.98);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(0,0,0,0.7);
+    overflow: hidden;
+    position: relative;
+  }
+  .pro-modal header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(56,189,248,0.15);
+  }
+  .pro-modal h2 { font-family:'Sora',sans-serif; font-size:1.05rem; letter-spacing:0.05em; color:var(--violet); }
+  .pro-modal p { font-size:0.9rem; color:var(--muted); margin-top:4px; }
+  .pro-modal .close-btn {
+    background:none; border:none; color:var(--muted); font-size:1.1rem; cursor:pointer;
+    padding:6px 8px; border-radius:10px; transition:background .2s;
+  }
+  .pro-modal .close-btn:hover { background:rgba(255,255,255,0.05); color:var(--text); }
+
+  .pro-modal .plans { display:grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap:12px; padding:18px; }
+  .pro-modal .plan {
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(56,189,248,0.12);
+    border-radius: 16px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pro-modal .plan h3 { font-family:'Sora',sans-serif; font-size:0.95rem; margin:0; color:var(--text); }
+  .pro-modal .plan .price { font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; color:var(--violet); }
+  .pro-modal .plan .features { font-size:0.75rem; color:var(--muted); line-height:1.4; margin:0; }
+  .pro-modal .plan button {
+    margin-top:auto;
+    border:none; border-radius:12px; padding:10px;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color:#070b14; font-weight:700; cursor:pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .pro-modal .plan button:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(14,165,233,0.35); }
+  .pro-modal .plan button.secondary {
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border: 1px solid rgba(56,189,248,0.2);
+  }
 </style>
 </head>
 <body>
@@ -1096,7 +1153,7 @@
       <button onclick="switchTab(this,'community')">👥 Comunidad</button>
       <button onclick="switchTab(this,'settings')">⚙️ Ajustes</button>
     </div>
-    <button class="nav-cta">✦ Pro Studio</button>
+    <button class="nav-cta" onclick="openProStudio()">✦ Pro Studio</button>
   </nav>
 
   <!-- MAIN -->
@@ -1676,6 +1733,40 @@
   </section>
 
 </div><!-- /app -->
+
+<!-- Pro Studio modal -->
+<div class="modal-overlay" id="proModal" onclick="if(event.target===this) closeProStudio()">
+  <div class="pro-modal" role="dialog" aria-modal="true" aria-labelledby="proModalTitle">
+    <header>
+      <div>
+        <h2 id="proModalTitle">Pro Studio</h2>
+        <p>Encuentra un plan accesible y céntrate en lo que importa. Actualiza cuando quieras.</p>
+      </div>
+      <button class="close-btn" onclick="closeProStudio()" aria-label="Cerrar">✕</button>
+    </header>
+    <div class="plans">
+      <div class="plan">
+        <h3>Gratis</h3>
+        <div class="price">0€ / mes</div>
+        <p class="features">Temporizador ilimitado<br>Notas & tareas<br>Comunidad</p>
+        <button onclick="selectPlan('Gratis')">Elegir</button>
+      </div>
+      <div class="plan">
+        <h3>Estudiante</h3>
+        <div class="price">1.99€ / mes</div>
+        <p class="features">Historial + estadísticas<br>Temas adicionales<br>Modo oscuro mejorado</p>
+        <button onclick="selectPlan('Estudiante')">Elegir</button>
+      </div>
+      <div class="plan">
+        <h3>Pro</h3>
+        <div class="price">3.99€ / mes</div>
+        <p class="features">Exportar datos<br>Personalización de panel<br>Prioridad en la comunidad</p>
+        <button onclick="selectPlan('Pro')">Elegir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2280,6 +2371,20 @@ function switchTab(btn, panel) {
     default:
       panels.timer.style.display = 'grid';
   }
+}
+
+function openProStudio() {
+  document.getElementById('proModal').classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+}
+
+function closeProStudio() {
+  document.getElementById('proModal').classList.remove('active');
+}
+
+function selectPlan(planName) {
+  closeProStudio();
+  showToast(`✅ Plan "${planName}" seleccionado. ¡Gracias por apoyar el proyecto!`);
 }
 
 // ════════════════════════════════════════
