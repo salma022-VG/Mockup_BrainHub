@@ -529,6 +529,99 @@
     .ai-card { grid-column:1; grid-row:3; }
   }
 
+  @media (max-width:600px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+    }
+
+    .nav-links {
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .nav-links button {
+      flex: 1 1 48%;
+      min-width: 120px;
+      padding: 8px 10px;
+      font-size: 0.82rem;
+    }
+
+    .nav-cta {
+      width: 100%;
+      justify-content: center;
+      padding: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    main {
+      padding: 12px 14px 24px;
+      gap: 14px;
+    }
+
+    .timer-circle-wrap {
+      gap: 18px;
+    }
+
+    .circle-container {
+      width: 180px;
+      height: 180px;
+    }
+
+    .timer-display {
+      font-size: 2.3rem;
+    }
+
+    .timer-label {
+      font-size: 0.6rem;
+    }
+
+    .timer-controls {
+      gap: 10px;
+    }
+
+    .btn-play {
+      width: 60px;
+      height: 60px;
+      font-size: 1.2rem;
+    }
+
+    .btn-ctrl {
+      width: 40px;
+      height: 40px;
+    }
+
+    .stats-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .xp-bar-wrap {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .ai-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .ai-avatar {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+
+    .ai-messages {
+      max-height: 320px;
+    }
+  }
+
   /* ════════════════════════════════
      PIXEL ART ANIMATIONS
   ════════════════════════════════ */
