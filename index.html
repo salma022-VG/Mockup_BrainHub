@@ -101,7 +101,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
 }
+  .logo:hover { transform: scale(1.05); opacity: 0.8; }
   .logo-icon {
     width:36px; height:36px; border-radius:10px;
     background: linear-gradient(135deg, #0ea5e9, #2563eb);
@@ -174,30 +177,30 @@
   }
 
   /* Temporizador circular */
-  .timer-circle-wrap { display:flex; flex-direction:column; align-items:center; gap:28px; margin: 0 auto; }
-  .circle-container { position:relative; width: min(220px, 40vw); height: min(220px, 40vw); max-width: 220px; max-height: 220px; }
+  .timer-circle-wrap { display:flex; flex-direction:column; align-items:center; gap: clamp(12px, 5vw, 28px); margin: 0 auto; }
+  .circle-container { position:relative; width: clamp(80px, 35vw, 220px); height: clamp(80px, 35vw, 220px); }
   .circle-svg { transform: rotate(-90deg); }
-  .circle-bg { fill:none; stroke:rgba(255,255,255,0.05); stroke-width:8; }
+  .circle-bg { fill:none; stroke:rgba(255,255,255,0.05); stroke-width: clamp(4, 1.5vw, 8); }
   .circle-prog {
-    fill:none; stroke-width:8; stroke-linecap:round;
+    fill:none; stroke-width: clamp(4, 1.5vw, 8); stroke-linecap:round;
     stroke: url(#timerGrad);
     transition: stroke-dashoffset 1s linear;
     filter: drop-shadow(0 0 10px rgba(249,115,22,0.9));
   }
   .circle-glow {
-    fill:none; stroke-width:18; stroke-linecap:round; opacity:0.12;
+    fill:none; stroke-width: clamp(8, 3vw, 18); stroke-linecap:round; opacity:0.12;
     stroke: url(#timerGrad);
     transition: stroke-dashoffset 1s linear;
   }
   .circle-inner { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .timer-display {
-    font-family:'Sora',sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight:900;
+    font-family:'Sora',sans-serif; font-size: clamp(1rem, 6vw, 3rem); font-weight:900;
     background: linear-gradient(135deg, #e2eaf8 0%, #38bdf8 50%, #2563eb 100%);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     line-height:1; letter-spacing:0.04em;
     filter: drop-shadow(0 0 12px rgba(56,189,248,0.4));
   }
-  .timer-label { font-size: clamp(0.5rem, 2vw, 0.65rem); color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; margin-top:4px; font-family:'Sora',sans-serif; }
+  .timer-label { font-size: clamp(0.35rem, 1.5vw, 0.65rem); color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; margin-top:4px; font-family:'Sora',sans-serif; }
   .session-dots { display:flex; gap:6px; margin-top:8px; }
   .session-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.1); transition:all .3s; }
   .session-dot.done { background:var(--violet); box-shadow:0 0 8px var(--violet); }
@@ -529,6 +532,22 @@
     .ai-card { grid-column:1; grid-row:3; }
   }
 
+  /* Pantallas muy pequeñas (móviles antiguos) */
+  @media (max-width:360px) {
+    .timer-card { padding: 8px; }
+    .timer-header { margin-bottom: 12px; }
+    .timer-title { font-size: 0.85rem; }
+    .timer-circle-wrap { gap: 8px; }
+    .timer-controls { gap: 6px; }
+    .btn-play { width: 32px; height: 32px; font-size: 0.7rem; }
+    .btn-ctrl { width: 24px; height: 24px; }
+    .stats-row { gap: 8px; }
+    .stat-pill { padding: 8px; }
+    .stat-val { font-size: 1rem; }
+    .stat-label { font-size: 0.5rem; }
+  }
+
+  /* Celulares (360px - 600px) */
   @media (max-width:600px) {
     nav {
       flex-direction: column;
@@ -562,60 +581,20 @@
       gap: 14px;
     }
 
-    .timer-card {
-      padding: 16px;
-    }
+    .timer-card { padding: clamp(8px, 3vw, 16px); }
+    .timer-header { margin-bottom: clamp(16px, 4vw, 24px); }
+    .timer-title { font-size: clamp(0.8rem, 2vw, 1rem); }
+    .timer-circle-wrap { gap: clamp(10px, 3vw, 16px); }
+    .timer-controls { gap: clamp(6px, 2vw, 8px); }
+    .btn-play { width: clamp(32px, 10vw, 44px); height: clamp(32px, 10vw, 44px); font-size: clamp(0.7rem, 2vw, 0.9rem); }
+    .btn-ctrl { width: clamp(24px, 7vw, 32px); height: clamp(24px, 7vw, 32px); font-size: clamp(0.6rem, 1.5vw, 0.75rem); }
 
-    .timer-circle-wrap {
-      gap: 16px;
-    }
+    .stats-row { flex-direction: column; gap: clamp(8px, 2vw, 10px); }
+    .stat-pill { padding: clamp(8px, 2vw, 12px); }
+    .stat-val { font-size: clamp(1rem, 4vw, 1.3rem); }
+    .stat-label { font-size: clamp(0.5rem, 1vw, 0.6rem); }
 
-    .circle-container {
-      width: min(120px, 28vw);
-      height: min(120px, 28vw);
-    }
-
-    .circle-bg, .circle-prog {
-      stroke-width: 6;
-    }
-
-    .circle-glow {
-      stroke-width: 12;
-    }
-
-    .timer-display {
-      font-size: clamp(1.4rem, 5.5vw, 1.8rem);
-    }
-
-    .timer-label {
-      font-size: clamp(0.4rem, 1.6vw, 0.55rem);
-    }
-
-    .timer-controls {
-      gap: 8px;
-    }
-
-    .btn-play {
-      width: 44px;
-      height: 44px;
-      font-size: 0.9rem;
-    }
-
-    .btn-ctrl {
-      width: 32px;
-      height: 32px;
-    }
-
-    .stats-row {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .xp-bar-wrap {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
+    .xp-bar-wrap { flex-direction: column; align-items: flex-start; gap: clamp(4px, 1vw, 6px); }
 
     .ai-header {
       flex-direction: column;
@@ -632,6 +611,24 @@
     .ai-messages {
       max-height: 320px;
     }
+  }
+
+  /* Tablets (600px - 900px) */
+  @media (min-width:600px) and (max-width:900px) {
+    .timer-card { padding: clamp(16px, 3vw, 24px); }
+    .circle-container { width: clamp(120px, 30vw, 180px); height: clamp(120px, 30vw, 180px); }
+    .timer-display { font-size: clamp(1.4rem, 5vw, 2rem); }
+    .btn-play { width: clamp(44px, 8vw, 56px); height: clamp(44px, 8vw, 56px); }
+    .btn-ctrl { width: clamp(32px, 6vw, 40px); height: clamp(32px, 6vw, 40px); }
+  }
+
+  /* Computadoras (900px+) */
+  @media (min-width:900px) {
+    .timer-card { padding: clamp(24px, 4vw, 36px); }
+    .circle-container { width: clamp(180px, 35vw, 220px); height: clamp(180px, 35vw, 220px); }
+    .timer-display { font-size: clamp(2rem, 8vw, 3rem); }
+    .btn-play { width: clamp(56px, 10vw, 68px); height: clamp(56px, 10vw, 68px); }
+    .btn-ctrl { width: clamp(40px, 7vw, 44px); height: clamp(40px, 7vw, 44px); }
   }
 
   /* ════════════════════════════════
@@ -1079,6 +1076,15 @@
     100%{ opacity:0; transform:translateY(-90px) scale(0.9); }
   }
 
+  /* ────────────────── Session Blocker ────────────────── */
+  .session-blocker {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(7,11,20,0.95);
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+  .session-blocker.hidden { display: none !important; }
+  
   /* ── Pro Studio modal ── */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 1000;
@@ -1135,6 +1141,149 @@
     color: var(--text);
     border: 1px solid rgba(56,189,248,0.2);
   }
+
+  /* ── Modelo de Login ── */
+  .login-modal {
+    width: min(400px, 100%);
+    background: rgba(15,22,40,0.98);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(0,0,0,0.7);
+    overflow: hidden;
+    position: relative;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .login-modal h2 { 
+    font-family:'Sora',sans-serif; font-size:1.3rem; letter-spacing:0.05em; color:var(--violet); 
+    text-align: center; margin: 0;
+  }
+  .login-modal .close-btn {
+    position: absolute; top: 12px; right: 12px;
+    background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer;
+    padding:6px 8px; border-radius:10px; transition:background .2s;
+  }
+  .login-modal .close-btn:hover { background:rgba(255,255,255,0.05); color:var(--text); }
+  .login-form { display: flex; flex-direction: column; gap: 14px; }
+  .login-form label { 
+    display: block; font-size: 0.85rem; color: var(--violet); font-weight: 600; 
+    margin-bottom: 4px; letter-spacing: 0.05em;
+  }
+  .login-form input { 
+    width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(56,189,248,0.2);
+    background: rgba(0,0,0,0.3); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .login-form input:focus { 
+    outline: none; border-color: rgba(56,189,248,0.6); 
+    box-shadow: 0 0 0 3px rgba(6,182,212,0.1);
+  }
+  .login-form input::placeholder { color: var(--muted); }
+  .login-submit { 
+    width: 100%; padding: 11px; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #070b14; 
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(6,182,212,0.4);
+  }
+  .login-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(56,189,248,0.5); }
+  .login-submit:active { transform: scale(0.98); }
+  .login-user-display { 
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 14px; background: rgba(6,182,212,0.1); border-radius: 10px;
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+  .login-user-display span { font-size: 0.9rem; color: var(--violet); font-weight: 600; }
+  .login-logout-btn { 
+    background: rgba(6,182,212,0.2); border: 1px solid rgba(56,189,248,0.3); color: var(--text);
+    padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .login-logout-btn:hover { background: rgba(237,84,89,0.3); border-color: rgba(237,84,89,0.5); color: #ed5459; }
+  
+  /* ────────────────────── Alternador de Login/Registro ────────────────────── */
+  .login-toggle {
+    display: flex; justify-content: center; margin-top: 10px;
+  }
+  .login-toggle p {
+    margin: 0; font-size: 0.85rem; color: var(--muted);
+  }
+  .toggle-btn {
+    background: none; border: none; color: var(--cyan); cursor: pointer;
+    font-weight: 700; text-decoration: underline; transition: color 0.2s;
+  }
+  .toggle-btn:hover { color: var(--violet); }
+  
+  /* ────────────────────── Modal de Tarjeta de Crédito ────────────────────── */
+  .card-modal {
+    width: min(450px, 100%);
+    background: rgba(15,22,40,0.98);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(0,0,0,0.7);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .card-modal h2 {
+    font-family:'Sora',sans-serif; font-size:1.3rem; letter-spacing:0.05em; color:var(--violet);
+    text-align: center; margin: 0;
+  }
+  .card-modal .close-btn {
+    position: absolute; top: 12px; right: 12px;
+    background:none; border:none; color:var(--muted); font-size:1.3rem; cursor:pointer;
+    padding:6px 8px; border-radius:10px; transition:background .2s;
+  }
+  .card-modal .close-btn:hover { background:rgba(255,255,255,0.05); color:var(--text); }
+  
+  .card-form {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .form-group {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .form-group label {
+    font-size: 0.85rem; color: var(--violet); font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .form-group input {
+    width: 100%; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid rgba(56,189,248,0.2);
+    background: rgba(0,0,0,0.3); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-group input:focus {
+    outline: none; border-color: rgba(56,189,248,0.6);
+    box-shadow: 0 0 0 3px rgba(6,182,212,0.1);
+  }
+  .form-group input::placeholder { color: var(--muted); }
+  
+  .payment-info {
+    background: rgba(6,182,212,0.08); border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .payment-info p {
+    font-size: 0.9rem; color: var(--text); margin: 4px 0;
+  }
+  .payment-info strong { color: var(--cyan); font-weight: 700; }
+  
+  .card-submit {
+    width: 100%; padding: 11px; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #070b14;
+    font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(6,182,212,0.4);
+  }
+  .card-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(56,189,248,0.5); }
+  .card-submit:active { transform: scale(0.98); }
+  .card-submit:disabled {
+    opacity: 0.5; cursor: not-allowed; transform: none;
+  }
+
 </style>
 </head>
 <body>
@@ -1154,7 +1303,7 @@
 <div class="app">
   <!-- NAV -->
   <nav>
-    <div class="logo">
+    <div class="logo" onclick="goHome()">
       <div class="logo-icon">⚡</div>
       BrainHub
     </div>
@@ -1165,13 +1314,64 @@
       <button onclick="switchTab(this,'community')">👥 Comunidad</button>
       <button onclick="switchTab(this,'settings')">⚙️ Ajustes</button>
     </div>
+    <div id="userDisplay"></div>
+    <button id="loginNavBtn" class="nav-cta" onclick="openLogin()" style="display:none;">🔐 Iniciar sesión</button>
     <button class="nav-cta" onclick="openProStudio()">✦ Pro Studio</button>
   </nav>
+  
+  <!-- Overlay bloqueador si no hay sesión -->
+  <div id="sessionBlocker" class="session-blocker" style="display:flex;"></div>
 
-  <!-- MAIN -->
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal" onclick="if(event.target===this) closeLogin()">
+    <div class="login-modal">
+      <button class="close-btn" onclick="closeLogin()">✕</button>
+      <h2 id="loginModalTitle">Bienvenido a BrainHub</h2>
+      
+      <!-- Formulario de Inicio de Sesión -->
+      <form class="login-form" id="loginForm" onsubmit="handleLogin(event)" style="display: flex;">
+        <div>
+          <label for="loginEmail">Correo electrónico</label>
+          <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+        </div>
+        <div>
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" placeholder="Contraseña" required>
+        </div>
+        <button type="submit" class="login-submit">Iniciar sesión</button>
+      </form>
+      
+      <!-- Formulario de Registro -->
+      <form class="login-form" id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+        <div>
+          <label for="registerName">Nombre completo</label>
+          <input type="text" id="registerName" placeholder="Tu nombre" required>
+        </div>
+        <div>
+          <label for="registerEmail">Correo electrónico</label>
+          <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+        </div>
+        <div>
+          <label for="registerPassword">Contraseña</label>
+          <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" required>
+        </div>
+        <div>
+          <label for="registerPassword2">Confirmar contraseña</label>
+          <input type="password" id="registerPassword2" placeholder="Confirma tu contraseña" required>
+        </div>
+        <button type="submit" class="login-submit">Crear cuenta</button>
+      </form>
+      
+      <!-- Alternador de Modo -->
+      <div class="login-toggle">
+        <p id="toggleText">¿No tienes cuenta? <button type="button" class="toggle-btn" onclick="toggleLoginMode()">Regístrate</button></p>
+      </div>
+    </div>
+  </div>
+
   <main>
 
-    <!-- TIMER CARD -->
+    <!-- Carta tiempo -->
     <div class="card timer-card">
       <div class="card-corner-tl"></div>
       <div class="card-corner-br"></div>
@@ -1759,23 +1959,60 @@
     <div class="plans">
       <div class="plan">
         <h3>Gratis</h3>
-        <div class="price">0€ / mes</div>
-        <p class="features">Temporizador ilimitado<br>Notas & tareas<br>Comunidad</p>
+        <div class="price">$0 COP</div>
+        <p class="features">Temporizador ilimitado<br>Notas & tareas<br>Comunidad básica</p>
         <button onclick="selectPlan('Gratis')">Elegir</button>
       </div>
       <div class="plan">
         <h3>Estudiante</h3>
-        <div class="price">1.99€ / mes</div>
-        <p class="features">Historial + estadísticas<br>Temas adicionales<br>Modo oscuro mejorado</p>
+        <div class="price">$9.900 COP / mes</div>
+        <p class="features">Historial + estadísticas<br>Temas adicionales<br>Modo oscuro mejorado<br>Prioridad en soporte</p>
         <button onclick="selectPlan('Estudiante')">Elegir</button>
       </div>
       <div class="plan">
         <h3>Pro</h3>
-        <div class="price">3.99€ / mes</div>
-        <p class="features">Exportar datos<br>Personalización de panel<br>Prioridad en la comunidad</p>
+        <div class="price">$24.900 COP / mes</div>
+        <p class="features">Exportar datos<br>Personalización avanzada<br>Prioridad en comunidad<br>Análisis profundo</p>
         <button onclick="selectPlan('Pro')">Elegir</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal de Tarjeta de Crédito -->
+<div class="modal-overlay" id="cardModal" onclick="if(event.target===this) closeCardModal()">
+  <div class="card-modal">
+    <button class="close-btn" onclick="closeCardModal()">✕</button>
+    <h2>Ingresa tus datos de pago</h2>
+    <form class="card-form" id="cardForm" onsubmit="processPayment(event)">
+      <div class="form-group">
+        <label for="cardName">Nombre del titular</label>
+        <input type="text" id="cardName" placeholder="Juan Pérez" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="cardNumber">Número de tarjeta</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label for="cardExpiry">Vencimiento (MM/AA)</label>
+          <input type="text" id="cardExpiry" placeholder="12/25" maxlength="5" required>
+        </div>
+        <div class="form-group">
+          <label for="cardCVC">CVC</label>
+          <input type="text" id="cardCVC" placeholder="123" maxlength="4" required>
+        </div>
+      </div>
+      
+      <div class="payment-info">
+        <p>Plan: <strong id="planName"></strong></p>
+        <p>Monto: <strong id="planPrice"></strong></p>
+      </div>
+      
+      <button type="submit" class="card-submit">Completar pago</button>
+    </form>
   </div>
 </div>
 
@@ -2385,19 +2622,205 @@ function switchTab(btn, panel) {
   }
 }
 
-function openProStudio() {
-  document.getElementById('proModal').classList.add('active');
-  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+function goHome() {
+  switchTab(document.querySelector('.nav-links button.active'), 'timer');
 }
 
-function closeProStudio() {
-  document.getElementById('proModal').classList.remove('active');
+// ── Abrir/Cerrar Modal de Login ──
+function openLogin() {
+  document.getElementById('loginModal').classList.add('active');
+  resetAuthForms();
 }
 
-function selectPlan(planName) {
-  closeProStudio();
-  showToast(`✅ Plan "${planName}" seleccionado. ¡Gracias por apoyar el proyecto!`);
+function closeLogin() {
+  const isLogged = localStorage.getItem('ff_user_logged') === 'true';
+  // Solo cerrar el modal si está autenticado
+  if (isLogged) {
+    document.getElementById('loginModal').classList.remove('active');
+  } else {
+    showToast('❌ Debes iniciar sesión para continuar');
+  }
 }
+
+// ── Alternar entre modo Login y Registro ──
+function toggleLoginMode() {
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  const titleEl = document.getElementById('loginModalTitle');
+  const toggleTextEl = document.getElementById('toggleText');
+  
+  // Alternar visibilidad de formularios
+  if (loginForm.style.display === 'flex') {
+    // Cambiar a registro
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'flex';
+    titleEl.textContent = 'Crear cuenta en BrainHub';
+    toggleTextEl.innerHTML = '¿Ya tienes cuenta? <button type="button" class="toggle-btn" onclick="toggleLoginMode()">Inicia sesión</button>';
+  } else {
+    // Cambiar a login
+    loginForm.style.display = 'flex';
+    registerForm.style.display = 'none';
+    titleEl.textContent = 'Bienvenido a BrainHub';
+    toggleTextEl.innerHTML = '¿No tienes cuenta? <button type="button" class="toggle-btn" onclick="toggleLoginMode()">Regístrate</button>';
+  }
+}
+
+// ── Resetear formularios ──
+function resetAuthForms() {
+  document.getElementById('loginForm').reset();
+  document.getElementById('registerForm').reset();
+  document.getElementById('loginModalTitle').textContent = 'Bienvenido a BrainHub';
+  document.getElementById('loginForm').style.display = 'flex';
+  document.getElementById('registerForm').style.display = 'none';
+  document.getElementById('toggleText').innerHTML = '¿No tienes cuenta? <button type="button" class="toggle-btn" onclick="toggleLoginMode()">Regístrate</button>';
+}
+
+// ── Obtener base de datos de usuarios registrados ──
+function getRegisteredUsers() {
+  return JSON.parse(localStorage.getItem('ff_users') || '[]');
+}
+
+// ── Guardar base de datos de usuarios ──
+function saveRegisteredUsers(users) {
+  localStorage.setItem('ff_users', JSON.stringify(users));
+}
+
+// ── Manejar Registro de Usuario ──
+function handleRegister(event) {
+  event.preventDefault();
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPassword').value;
+  const password2 = document.getElementById('registerPassword2').value;
+  
+  // Validar que las contraseñas coincidan
+  if (password !== password2) {
+    showToast('❌ Las contraseñas no coinciden');
+    return;
+  }
+  
+  // Validar longitud de contraseña
+  if (password.length < 6) {
+    showToast('❌ La contraseña debe tener al menos 6 caracteres');
+    return;
+  }
+  
+  // Validar que el email no esté registrado
+  const users = getRegisteredUsers();
+  if (users.some(u => u.email === email)) {
+    showToast('❌ Este correo ya está registrado');
+    return;
+  }
+  
+  // Registrar nuevo usuario
+  const newUser = {
+    name: name,
+    email: email,
+    password: password,
+    createdAt: new Date().toISOString()
+  };
+  
+  users.push(newUser);
+  saveRegisteredUsers(users);
+  
+  showToast(`✅ ¡Cuenta creada exitosamente, ${name}!`);
+  
+  // Después de registrarse, auto-iniciar sesión
+  localStorage.setItem('ff_user_email', email);
+  localStorage.setItem('ff_user_name', name);
+  localStorage.setItem('ff_user_logged', 'true');
+  
+  closeLogin();
+  updateUserDisplay();
+  document.getElementById('registerForm').reset();
+}
+
+// ── Manejar Inicio de Sesión ──
+function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  
+  // Validar que el usuario esté registrado
+  const users = getRegisteredUsers();
+  const user = users.find(u => u.email === email);
+  
+  if (!user) {
+    showToast('❌ Usuario no encontrado');
+    return;
+  }
+  
+  // Validar contraseña
+  if (user.password !== password) {
+    showToast('❌ Contraseña incorrecta');
+    return;
+  }
+  
+  // Login exitoso
+  localStorage.setItem('ff_user_email', email);
+  localStorage.setItem('ff_user_name', user.name);
+  localStorage.setItem('ff_user_logged', 'true');
+  showToast(`✅ ¡Bienvenido, ${user.name}!`);
+  closeLogin();
+  updateUserDisplay();
+  document.getElementById('loginForm').reset();
+}
+
+function logout() {
+  localStorage.removeItem('ff_user_email');
+  localStorage.removeItem('ff_user_name');
+  localStorage.removeItem('ff_user_logged');
+  showToast('✅ Sesión cerrada');
+  updateUserDisplay();
+  openLogin();
+  // Bloquear funciones
+  document.querySelectorAll('.nav-links button').forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.cursor = 'not-allowed';
+  });
+}
+
+function updateUserDisplay() {
+  const userDisplay = document.getElementById('userDisplay');
+  const loginNavBtn = document.getElementById('loginNavBtn');
+  const sessionBlocker = document.getElementById('sessionBlocker');
+  const isLogged = localStorage.getItem('ff_user_logged') === 'true';
+  const userName = localStorage.getItem('ff_user_name');
+  const userEmail = localStorage.getItem('ff_user_email');
+  
+  if (isLogged && (userName || userEmail)) {
+    const displayName = userName || userEmail;
+    userDisplay.innerHTML = `
+      <div class="login-user-display">
+        <span>👤 ${displayName}</span>
+        <button class="login-logout-btn" onclick="logout()">Cerrar</button>
+      </div>
+    `;
+    loginNavBtn.style.display = 'none';
+    sessionBlocker.classList.add('hidden');
+  } else {
+    userDisplay.innerHTML = '';
+    loginNavBtn.style.display = 'block';
+    sessionBlocker.classList.remove('hidden');
+  }
+}
+
+// Inicializar login al cargar la página
+window.addEventListener('load', function() {
+  updateUserDisplay();
+  const isLogged = localStorage.getItem('ff_user_logged') === 'true';
+  if (!isLogged) {
+    openLogin();
+    // Bloquear todas las funciones de la página
+    document.querySelectorAll('.nav-links button').forEach(btn => {
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+    });
+  }
+});
+
 
 // ════════════════════════════════════════
 // PANEL DE ESTADÍSTICAS
@@ -2757,7 +3180,7 @@ function clearAllData() {
 })();
 
 // ════════════════════════════════════════
-// COMMUNITY SYSTEM (Shared Storage)
+// SISTEMA DE COMUNIDAD (Almacenamiento Compartido)
 // ════════════════════════════════════════
 
 const AVATAR_GRADIENTS = [
@@ -2781,12 +3204,12 @@ let allPosts = [];
 let currentFilter = 'all';
 let likedPosts = new Set(JSON.parse(localStorage.getItem('ff_liked') || '[]'));
 
-// ── Char counter ──
+// ── Contador de caracteres ──
 document.getElementById('postBody').addEventListener('input', function() {
   document.getElementById('charCount').textContent = `${this.value.length}/500`;
 });
 
-// ── Publish ──
+// ── Publicar ──
 async function publishPost() {
   const nick   = document.getElementById('postNick').value.trim() || 'Anónimo';
   const cat    = document.getElementById('postCategory').value;
@@ -2812,9 +3235,9 @@ async function publishPost() {
   };
 
   try {
-    // Store as shared so all users see it
+    // Guardar como compartido para que todos los usuarios lo vean
     await window.storage.set(`post:${post.id}`, JSON.stringify(post), true);
-    // Also update post index
+    // También actualizar el índice de publicaciones
     let indexRaw;
     try { indexRaw = await window.storage.get('post-index', true); } catch(e){}
     const index = indexRaw ? JSON.parse(indexRaw.value) : [];
@@ -2822,7 +3245,7 @@ async function publishPost() {
     if (index.length > 60) index.splice(60);
     await window.storage.set('post-index', JSON.stringify(index), true);
 
-    // Clear form
+    // Limpiar formulario
     document.getElementById('postTitle').value = '';
     document.getElementById('postBody').value  = '';
     document.getElementById('charCount').textContent = '0/500';
@@ -2838,7 +3261,7 @@ async function publishPost() {
   btn.querySelector('span').textContent = '📤 Publicar';
 }
 
-// ── Load posts ──
+// ── Cargar publicaciones ──
 async function loadPosts() {
   document.getElementById('feedLoading').style.display = 'flex';
   document.getElementById('postFeed').innerHTML = `<div class="feed-loading" id="feedLoading">
@@ -2857,7 +3280,7 @@ async function loadPosts() {
         if (raw) allPosts.push(JSON.parse(raw.value));
       } catch(e) {}
     }
-    // Sort newest first
+    // Ordenar por más recientes primero
     allPosts.sort((a,b) => b.ts - a.ts);
     renderFeed();
     updateOnlineCount();
@@ -2871,7 +3294,7 @@ async function loadPosts() {
   }
 }
 
-// ── Render feed ──
+// ── Renderizar feed ──
 function renderFeed() {
   const filtered = currentFilter === 'all' ? allPosts : allPosts.filter(p => p.cat === currentFilter);
   const feed = document.getElementById('postFeed');
@@ -2921,7 +3344,7 @@ function renderFeed() {
   });
 }
 
-// ── Like ──
+// ── Dar like ──
 async function toggleLike(id, btn) {
   const post = allPosts.find(p => p.id === id);
   if (!post) return;
@@ -2944,7 +3367,7 @@ async function toggleLike(id, btn) {
   } catch(e) {}
 }
 
-// ── Reply ──
+// ── Responder ──
 function replyPost(id, nick) {
   const input = document.getElementById('postTitle');
   const body  = document.getElementById('postBody');
@@ -2954,13 +3377,13 @@ function replyPost(id, nick) {
   showToast(`💬 Respondiendo a ${nick}`);
 }
 
-// ── Copy link ──
+// ── Copiar enlace ──
 function copyPost(id) {
   navigator.clipboard?.writeText(`BrainHub post #${id}`).catch(()=>{});
   showToast('🔗 ¡Enlace copiado al portapapeles!');
 }
 
-// ── Filter ──
+// ── Filtrar ──
 function filterFeed(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
@@ -2968,7 +3391,7 @@ function filterFeed(cat, btn) {
   renderFeed();
 }
 
-// ── Leaderboard ──
+// ── Tabla de clasificación ──
 async function loadLeaderboard() {
   const list = document.getElementById('leaderboardList');
   try {
@@ -3026,14 +3449,14 @@ async function submitScore() {
   }
 }
 
-// ── Update online count (approximate via post timestamps) ──
+// ── Actualizar contador en línea (aproximado por marcas de tiempo) ──
 function updateOnlineCount() {
   const fiveMin = Date.now() - 5 * 60 * 1000;
   const recent  = allPosts.filter(p => p.ts > fiveMin).length;
   document.getElementById('onlineCount').textContent = Math.max(1, recent + 1);
 }
 
-// ── Helpers ──
+// ── Funciones auxiliares ──
 function hashStr(str) {
   let h = 0;
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
@@ -3057,11 +3480,11 @@ function shakeEl(id) {
   setTimeout(() => { el.style.borderColor=''; el.style.boxShadow=''; }, 900);
 }
 
-// Init
+// Iniciar
 updateDisplay();
 updateCircle();
 renderNotes();
-// Add a sample note
+// Agregar notas de ejemplo
 notes.push({id:1, text:'Revisar informe del proyecto', tag:'work', done:false});
 notes.push({id:2, text:'Preparar presentación de ventas', tag:'work', done:false});
 notes.push({id:3, text:'Investigar nuevas herramientas de diseño', tag:'idea', done:true});
@@ -3070,10 +3493,10 @@ completedTasks = notes.filter(x=>x.done).length;
 document.getElementById('statTasks').textContent = completedTasks;
 
 // ════════════════════════════════════════
-// PIXEL ART SYSTEMS
+// SISTEMAS DE ARTE DE PÍXELES
 // ════════════════════════════════════════
 
-// ── Keep glitch pseudo-elements in sync ──
+// ── Mantener sincronizados los pseudo-elementos de glitch ──
 function syncGlitch() {
   const el = document.getElementById('timerDisplay');
   el.dataset.text = el.textContent;
@@ -3082,7 +3505,7 @@ const origUpdateDisplay = updateDisplay;
 updateDisplay = function() { origUpdateDisplay(); syncGlitch(); };
 syncGlitch();
 
-// ── XP Bar ──
+// ── Barra de XP ──
 function updateXP() {
   const maxPerLevel = 8;
   const xp = completedSessions % maxPerLevel;
@@ -3091,12 +3514,12 @@ function updateXP() {
   document.getElementById('xpVal').textContent = pct + '%';
 }
 
-// ── Pixel Sprite Renderer ──
+// ── Renderizador de Sprite de Píxeles ──
 const spriteCanvas = document.getElementById('spriteCanvas');
 const sCtx = spriteCanvas.getContext('2d');
 sCtx.imageSmoothingEnabled = false;
 
-// Pixel art character (astronaut / robot) — 16×16 logical, drawn at 2x
+// Carácter de arte de píxeles (astronauta / robot) — 16×16 lógico, dibujado a 2x
 const SPRITE_IDLE = [
   [0,0,1,1,1,1,0,0],
   [0,1,2,2,2,2,1,0],
@@ -3159,7 +3582,7 @@ function bounceSprite() {
   setTimeout(() => { spriteMode = running ? 'run' : 'idle'; label.style.opacity='0'; }, 2000);
 }
 
-// Update sprite when timer runs/stops
+// Actualizar sprite cuando inicia/detiene el temporizador
 const origStart = startTimer;
 startTimer = function() {
   origStart(); spriteMode = 'run';
@@ -3173,7 +3596,7 @@ stopTimer = function() {
   origStop(); spriteMode = 'idle';
 };
 
-// ── Pixel Dust Particles ──
+// ── Partículas de Polvo de Píxeles ──
 const dustContainer = document.getElementById('pixelDust');
 const dustColors = ['#38bdf8','#0ea5e9','#2563eb','#7c3aed','#67e8f9','#60a5fa'];
 for (let i = 0; i < 40; i++) {
@@ -3194,7 +3617,7 @@ for (let i = 0; i < 40; i++) {
   dustContainer.appendChild(d);
 }
 
-// ── Pixel Explosion on session complete ──
+// ── Explosión de Píxeles al completar sesión ──
 const pCanvas = document.getElementById('pixelCanvas');
 const pCtx = pCanvas.getContext('2d');
 pCanvas.width = window.innerWidth;
@@ -3239,7 +3662,7 @@ function renderPixels() {
 }
 renderPixels();
 
-// ── Score Popup ──
+// ── Popup de Puntuación ──
 function showScorePopup(x, y, text) {
   const el = document.createElement('div');
   el.className = 'score-popup';
@@ -3250,7 +3673,7 @@ function showScorePopup(x, y, text) {
   setTimeout(() => el.remove(), 1900);
 }
 
-// ── Hook session complete (visual + history + notifications + auto-advance) ──
+// ── Enganche de sesión completa (visual + historial + notificaciones + auto-avance) ──
 const origSessionComplete = sessionComplete;
 sessionComplete = function() {
   origSessionComplete();
@@ -3268,11 +3691,11 @@ sessionComplete = function() {
     label.textContent = celebMsgs[Math.floor(Math.random()*celebMsgs.length)];
     label.style.opacity = '1';
     setTimeout(() => { spriteMode = 'idle'; label.style.opacity='0'; }, 2500);
-    // Save to history, streak, notification
+    // Guardar en historial, racha, notificación
     saveSessionToHistory();
     updateStreak();
     sendBrowserNotif('🍅 ¡Pomodoro completado!', `Sesión #${completedSessions} terminada. ¡A descansar!`);
-    // Auto-advance
+    // Auto-avanzar
     if (appSettings.autoAdvance) {
       setTimeout(() => {
         const shortTab = document.querySelectorAll('.mode-tab')[1];
@@ -3291,14 +3714,14 @@ sessionComplete = function() {
   }
 };
 
-// ── Pixel click burst on play button ──
+// ── Explosión de píxeles al hacer clic en botón de reproducción ──
 document.getElementById('playBtn').addEventListener('click', () => {
   const r = document.getElementById('playBtn').getBoundingClientRect();
   spawnPixelExplosion(r.left + r.width/2, r.top + r.height/2);
 });
 
 // ════════════════════════════════════════
-// ARCADE SOUND SYSTEM (Web Audio API)
+// SISTEMA DE SONIDO ARCADE (Web Audio API)
 // ════════════════════════════════════════
 let audioCtx = null;
 
@@ -3356,24 +3779,24 @@ function playNoise(startTime, duration, gainVal = 0.15, ctx) {
   source.stop(startTime + duration);
 }
 
-// 🎮 START SOUND — Power-up ascending arpeggio
+// 🎮 SONIDO DE INICIO — Arpegio ascendente de potenciador
 function playStartSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
-  // Coin-style sweep up
+  // Barrido ascendente estilo moneda
   playFreqSweep(200, 800, 'square', t,       0.08, 0.35, ctx);
-  // Arpeggio notes
+  // Notas del arpegio
   const notes = [523, 659, 784, 1047, 1319];
   notes.forEach((freq, i) => {
     playTone(freq, 'square', t + 0.08 + i * 0.07, 0.09, 0.25, ctx);
   });
-  // Final high ping
+  // Ping agudo final
   playFreqSweep(1319, 2000, 'square', t + 0.44, 0.12, 0.18, ctx);
-  // Bass thud
+  // Golpe de bajo
   playFreqSweep(120, 60, 'sawtooth', t, 0.15, 0.3, ctx);
 }
 
-// ⏸ PAUSE SOUND — Descending blip
+// ⏸ SONIDO DE PAUSA — Blip descendente
 function playPauseSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3384,7 +3807,7 @@ function playPauseSound() {
   playFreqSweep(300, 80, 'sawtooth', t + 0.24, 0.2, 0.2, ctx);
 }
 
-// 🔄 RESET SOUND — Rewind zap
+// 🔄 SONIDO DE REINICIO — Chispa de rebobinado
 function playResetSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3393,11 +3816,11 @@ function playResetSound() {
   playTone(220, 'square', t + 0.2, 0.1, 0.2, ctx);
 }
 
-// 🍅 COMPLETE SOUND — Victory fanfare
+// 🍅 SONIDO DE COMPLETO — Fanfarria de victoria
 function playCompleteSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
-  // Fanfare sequence
+  // Secuencia de fanfarria
   const melody = [
     [523, 0.00], [523, 0.12], [523, 0.24],
     [415, 0.32], [523, 0.44], [659, 0.60],
@@ -3406,7 +3829,7 @@ function playCompleteSound() {
   melody.forEach(([freq, when]) => {
     playTone(freq, 'square', t + when, 0.14, 0.28, ctx);
   });
-  // Harmony layer
+  // Capa de armonía
   const harmony = [
     [659, 0.00], [659, 0.12], [659, 0.24],
     [523, 0.32], [659, 0.44], [784, 0.60],
@@ -3415,7 +3838,7 @@ function playCompleteSound() {
   harmony.forEach(([freq, when]) => {
     playTone(freq, 'triangle', t + when, 0.14, 0.12, ctx);
   });
-  // Final glitter
+  // Brillo final
   for (let i = 0; i < 8; i++) {
     playTone(800 + i*200, 'sine', t + 0.86 + i*0.04, 0.08, 0.1, ctx);
   }
@@ -3424,7 +3847,7 @@ function playCompleteSound() {
   playFreqSweep(80, 160, 'sawtooth', t + 0.72, 0.4, 0.3, ctx);
 }
 
-// ⏭ SKIP SOUND — Quick zap
+// ⏭ SONIDO DE SALTO — Chispa rápida
 function playSkipSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3433,7 +3856,7 @@ function playSkipSound() {
   playNoise(t, 0.1, 0.1, ctx);
 }
 
-// ✓ NOTE CHECK SOUND — item pickup
+// ✓ SONIDO DE NOTA MARCADA — Recogida de objeto
 function playCheckSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3442,7 +3865,7 @@ function playCheckSound() {
   playTone(1318,'square', t+0.12, 0.1,  0.15, ctx);
 }
 
-// ✕ NOTE DELETE SOUND — error blip
+// Sonido de nota eliminar — papelera
 function playDeleteSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3450,7 +3873,7 @@ function playDeleteSound() {
   playNoise(t, 0.08, 0.08, ctx);
 }
 
-// ➕ NOTE ADD SOUND — coin pickup
+// ➕ SONIDO DE AGREGAR NOTA — Recogida de moneda
 function playAddNoteSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3458,7 +3881,7 @@ function playAddNoteSound() {
   playTone(1400, 'square', t + 0.07, 0.1, 0.2, ctx);
 }
 
-// 💬 AI SEND SOUND — beam transmit
+// Sonido de IA enviar — whoosh + blip
 function playAiSendSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3466,7 +3889,7 @@ function playAiSendSound() {
   playTone(1800, 'sine', t + 0.15, 0.06, 0.1, ctx);
 }
 
-// 💬 AI RECEIVE SOUND — incoming blip
+// Sonido de IA recibir — blips ascendentes
 function playAiReceiveSound() {
   const ctx = getAudioCtx();
   const t = ctx.currentTime;
@@ -3475,45 +3898,45 @@ function playAiReceiveSound() {
   playTone(784, 'sine', t+0.13, 0.1,  0.1,  ctx);
 }
 
-// ── Hook sounds into existing functions ──
-// Play button
+// ── Conectar sonidos a funciones existentes ──
+// Botón de reproducción
 document.getElementById('playBtn').addEventListener('click', () => {
   if (!running) playStartSound(); else playPauseSound();
-}, true); // capture=true so it fires before toggle
+}, true); // capture=true para que se dispare antes del cambio
 
-// Reset button — find it by its ↺ content
+// Botón de reinicio — encontrarlo por su contenido ↺
 document.querySelectorAll('.btn-ctrl').forEach(btn => {
   if (btn.textContent.includes('↺')) btn.addEventListener('click', playResetSound);
   if (btn.textContent.includes('⏭')) btn.addEventListener('click', playSkipSound);
 });
 
-// Note add
+// Agregar nota
 const origAddNoteSound = addNote;
 addNote = function() {
   playAddNoteSound();
   origAddNoteSound();
 };
 
-// Note toggle / delete — delegated
+// Activar/eliminar nota — delegado
 document.getElementById('notesList').addEventListener('click', e => {
   if (e.target.classList.contains("note-check") && appSettings.sounds!==false) playCheckSound();
   if (e.target.classList.contains("note-del") && appSettings.sounds!==false) playDeleteSound();
 });
 
-// AI send
+// IA enviar
 document.querySelector('.btn-send').addEventListener('click', playAiSendSound, true);
 document.getElementById('aiInput').addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) playAiSendSound();
 }, true);
 
-// AI receive — wrap appendMsg
+// IA recibir — envolver appendMsg
 const origAppendMsg = appendMsg;
 appendMsg = function(text, type) {
   origAppendMsg(text, type);
   if (type === 'ai') setTimeout(playAiReceiveSound, 100);
 };
 
-// Complete — already hooked; add sound
+// Completo — ya enganchado; agregar sonido
 const origSessionCompleteSound = sessionComplete;
 sessionComplete = function() {
   if (currentMode === 'work') playCompleteSound();
@@ -3521,7 +3944,7 @@ sessionComplete = function() {
   origSessionCompleteSound();
 };
 
-// ── Pixel note flash ──
+// ── Destello de nota de píxel ──
 const origAddNoteFlash = addNote;
 addNote = function() {
   origAddNoteFlash();
@@ -3531,6 +3954,104 @@ addNote = function() {
     setTimeout(() => items[0].classList.remove('new'), 700);
   }
 };
+
+// ────────────────────── PRO STUDIO MODAL ────────────────────────
+function openProStudio() {
+  document.getElementById('proModal').classList.add('active');
+}
+
+function closeProStudio() {
+  document.getElementById('proModal').classList.remove('active');
+}
+
+function selectPlan(planName) {
+  // Si es plan Gratis, completar sin pedir tarjeta
+  if (planName === 'Gratis') {
+    localStorage.setItem('ff_selected_plan', planName);
+    showToast(`✅ Plan ${planName} activado. ¡Disfruta!`);
+    closeProStudio();
+    return;
+  }
+  
+  // Para planes de pago, mostrar modal de tarjeta
+  document.getElementById('planName').textContent = planName;
+  
+  // Mostrar precio según el plan
+  const prices = {
+    'Estudiante': '$9.900 COP / mes',
+    'Pro': '$24.900 COP / mes'
+  };
+  document.getElementById('planPrice').textContent = prices[planName] || planName;
+  
+  // Guardar temporalmente el plan seleccionado
+  window.currentSelectedPlan = planName;
+  
+  // Mostrar modal de tarjeta
+  document.getElementById('cardModal').classList.add('active');
+  document.getElementById('cardForm').reset();
+}
+
+function closeCardModal() {
+  document.getElementById('cardModal').classList.remove('active');
+  window.currentSelectedPlan = null;
+}
+
+function processPayment(event) {
+  event.preventDefault();
+  
+  const cardName = document.getElementById('cardName').value.trim();
+  const cardNumber = document.getElementById('cardNumber').value.trim();
+  const cardExpiry = document.getElementById('cardExpiry').value.trim();
+  const cardCVC = document.getElementById('cardCVC').value.trim();
+  
+  // Validar que todos los campos estén llenos
+  if (!cardName || !cardNumber || !cardExpiry || !cardCVC) {
+    showToast('❌ Por favor completa todos los campos');
+    return;
+  }
+  
+  // Validar número de tarjeta (solo dígitos, 13-19 dígitos)
+  const cardDigits = cardNumber.replace(/\s/g, '');
+  if (!/^\d{13,19}$/.test(cardDigits)) {
+    showToast('❌ Número de tarjeta inválido');
+    return;
+  }
+  
+  // Validar formato de vencimiento (MM/AA)
+  if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+    showToast('❌ Formato de vencimiento inválido (MM/AA)');
+    return;
+  }
+  
+  // Validar CVC (3-4 dígitos)
+  if (!/^\d{3,4}$/.test(cardCVC)) {
+    showToast('❌ CVC inválido');
+    return;
+  }
+  
+  // Si todo es válido, procesar pago
+  const planName = window.currentSelectedPlan;
+  
+  // Guardar plan seleccionado
+  localStorage.setItem('ff_selected_plan', planName);
+  
+  // Guardar datos de pago (en producción esto iría al servidor de pago seguro)
+  localStorage.setItem('ff_payment_plan', planName);
+  localStorage.setItem('ff_payment_date', new Date().toISOString());
+  
+  showToast(`✅ ¡Pago procesado! Plan ${planName} activado.`);
+  
+  // Cerrar modal
+  closeCardModal();
+  
+  // Cerrar también el modal de Pro Studio
+  closeProStudio();
+  
+  // Limpiar formulario
+  document.getElementById('cardForm').reset();
+}
+
+
 </script>
 </body>
 </html>
