@@ -175,7 +175,7 @@
 
   /* Circle timer */
   .timer-circle-wrap { display:flex; flex-direction:column; align-items:center; gap:28px; margin: 0 auto; }
-  .circle-container { position:relative; width:220px; height:220px; }
+  .circle-container { position:relative; width: min(220px, 40vw); height: min(220px, 40vw); max-width: 220px; max-height: 220px; }
   .circle-svg { transform: rotate(-90deg); }
   .circle-bg { fill:none; stroke:rgba(255,255,255,0.05); stroke-width:8; }
   .circle-prog {
@@ -191,13 +191,13 @@
   }
   .circle-inner { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .timer-display {
-    font-family:'Sora',sans-serif; font-size:3rem; font-weight:900;
+    font-family:'Sora',sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight:900;
     background: linear-gradient(135deg, #e2eaf8 0%, #38bdf8 50%, #2563eb 100%);
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     line-height:1; letter-spacing:0.04em;
     filter: drop-shadow(0 0 12px rgba(56,189,248,0.4));
   }
-  .timer-label { font-size:0.65rem; color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; margin-top:4px; font-family:'Sora',sans-serif; }
+  .timer-label { font-size: clamp(0.5rem, 2vw, 0.65rem); color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; margin-top:4px; font-family:'Sora',sans-serif; }
   .session-dots { display:flex; gap:6px; margin-top:8px; }
   .session-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.1); transition:all .3s; }
   .session-dot.done { background:var(--violet); box-shadow:0 0 8px var(--violet); }
@@ -562,21 +562,25 @@
       gap: 14px;
     }
 
+    .timer-card {
+      padding: 20px;
+    }
+
     .timer-circle-wrap {
       gap: 18px;
     }
 
     .circle-container {
-      width: 180px;
-      height: 180px;
+      width: min(160px, 35vw);
+      height: min(160px, 35vw);
     }
 
     .timer-display {
-      font-size: 2.3rem;
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
     }
 
     .timer-label {
-      font-size: 0.6rem;
+      font-size: clamp(0.45rem, 1.8vw, 0.6rem);
     }
 
     .timer-controls {
@@ -584,14 +588,14 @@
     }
 
     .btn-play {
-      width: 60px;
-      height: 60px;
-      font-size: 1.2rem;
+      width: 50px;
+      height: 50px;
+      font-size: 1rem;
     }
 
     .btn-ctrl {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
     }
 
     .stats-row {
