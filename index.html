@@ -40,7 +40,7 @@
     cursor: default;
   }
 
-  /* ── Cyber dark background ── */
+  /* ── Fondo oscuro cibernético ── */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0;
@@ -52,7 +52,7 @@
     pointer-events: none;
   }
 
-  /* Subtle scan grid - matching the image aesthetic */
+  /* Cuadrícula de escaneo sutil - coincidiendo con la estética de la imagen */
   body::after {
     content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.03;
     background-image:
@@ -61,7 +61,7 @@
     background-size: 40px 40px;
   }
 
-  /* Floating cyber particles */
+  /* Partículas cibernéticas flotantes */
   .stars { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .star {
     position:absolute; border-radius:50%;
@@ -78,10 +78,10 @@
     80%{ opacity:var(--op,0.3); }
   }
 
-  /* ── Layout ── */
+  /* ── Diseño ── */
   .app { position:relative; z-index:1; display:grid; grid-template-rows:auto 1fr; min-height:100vh; }
 
-  /* ── Nav ── */
+  /* ── Navegación ── */
   nav {
     display:flex; align-items:center; justify-content:space-between;
     padding: 16px 40px;
@@ -131,7 +131,7 @@
   }
   .nav-cta:hover { transform:translateY(-1px); box-shadow: 0 6px 28px rgba(37,99,235,0.5); }
 
-  /* ── Main grid ── */
+  /* ── Cuadrícula principal ── */
   main {
     display:grid;
     grid-template-columns: 1fr 340px;
@@ -141,7 +141,7 @@
     max-width: 1300px; margin: 0 auto; width:100%;
   }
 
-  /* ── Cards ── */
+  /* ── Tarjetas ── */
   .card {
     background: linear-gradient(155deg, rgba(15,22,40,0.97), rgba(19,28,51,0.93));
     border: 1px solid rgba(56,189,248,0.12);
@@ -158,7 +158,7 @@
     background: linear-gradient(90deg, transparent, rgba(56,189,248,0.5), rgba(6,182,212,0.3), transparent);
   }
 
-  /* ── TIMER CARD ── */
+  /* ── TARJETA DEL TEMPORIZADOR ── */
   .timer-card { grid-column: 1; grid-row: 1; padding: 36px; }
   .timer-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
   .timer-title { font-family:'Sora',sans-serif; font-size:1rem; font-weight:700; color:var(--violet); letter-spacing:0.08em; }
@@ -173,7 +173,7 @@
     box-shadow:0 2px 12px rgba(6,182,212,0.5);
   }
 
-  /* Circle timer */
+  /* Temporizador circular */
   .timer-circle-wrap { display:flex; flex-direction:column; align-items:center; gap:28px; margin: 0 auto; }
   .circle-container { position:relative; width: min(220px, 40vw); height: min(220px, 40vw); max-width: 220px; max-height: 220px; }
   .circle-svg { transform: rotate(-90deg); }
@@ -237,7 +237,7 @@
   }
   .setting-pill input[type=number]::-webkit-inner-spin-button { -webkit-appearance:none; }
 
-  /* ── NOTES CARD ── */
+  /* ── TARJETA DE NOTAS ── */
   .notes-card { grid-column: 1; grid-row: 2; padding:28px; display:flex; flex-direction:column; gap:16px; }
   .card-title { font-family:'Sora',sans-serif; font-size:0.95rem; font-weight:700; display:flex; align-items:center; gap:8px; letter-spacing:0.06em; color:var(--violet); }
   .badge { font-size:0.65rem; padding:3px 10px; border-radius:20px; font-family:'DM Sans',sans-serif; font-weight:600; }
@@ -297,7 +297,7 @@
     outline:none; cursor:pointer;
   }
 
-  /* ── AI CARD ── */
+  /* ── TARJETA DE IA ── */
   .ai-card { grid-column: 2; grid-row: 1 / 3; display:flex; flex-direction:column; }
   .ai-header {
     padding:22px 22px 14px;
@@ -363,7 +363,7 @@
   }
   .btn-send:hover { transform:scale(1.1); box-shadow:0 6px 24px rgba(56,189,248,0.6); }
 
-  /* ── Stats bar ── */
+  /* ── Barra de estadísticas ── */
   .stats-row { display:flex; gap:10px; }
   .stat-pill {
     flex:1; padding:12px; border-radius:18px; text-align:center;
@@ -375,7 +375,7 @@
   .stat-val.pink   { color:var(--cyan); }
   .stat-label { font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; font-family:'Sora',sans-serif; }
 
-  /* ── Ambient ring ── */
+  /* ── Anillo ambiental ── */
   .ambient-ring {
     position:fixed; pointer-events:none; z-index:0;
     width:700px; height:700px; border-radius:50%;
@@ -387,7 +387,7 @@
   @keyframes ambientPulse { 0%,100%{transform:translate(-50%,-50%) scale(1);} 50%{transform:translate(-50%,-50%) scale(1.07);} }
 
   /* ══════════════════════════════════
-     COMMUNITY PANEL
+     PANEL DE COMUNIDAD
   ══════════════════════════════════ */
   .community-panel {
     position:relative; z-index:1;
@@ -513,7 +513,7 @@
     .community-panel { padding:0 16px 40px; }
   }
 
-  /* ── Notification toast ── */
+  /* ── Notificación toast ── */
   .toast {
     position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px);
     background:linear-gradient(135deg, rgba(15,22,40,0.98), rgba(19,28,51,0.97));
@@ -635,10 +635,10 @@
   }
 
   /* ════════════════════════════════
-     PIXEL ART ANIMATIONS
+     ANIMACIONES DE ARTE PIXEL
   ════════════════════════════════ */
 
-  /* ── File Attachment System ── */
+  /* ── Sistema de adjunto de archivos ── */
   .ai-card { position: relative; overflow: visible !important; }
 
   .btn-attach {
@@ -670,7 +670,7 @@
   }
   @keyframes badgePop { from{transform:scale(0)} to{transform:scale(1)} }
 
-  /* File Tray */
+  /* Bandeja de archivos */
   .file-tray {
     position: absolute; bottom: 68px; left: 0; right: 0; z-index: 50;
     background: linear-gradient(145deg, rgba(10,15,36,0.98), rgba(13,20,51,0.98));
@@ -709,7 +709,7 @@
     font-family: 'Jura', sans-serif;
   }
 
-  /* Individual file chip */
+  /* Chip de archivo individual */
   .file-chip {
     display: flex; align-items: center; gap: 8px; padding: 7px 10px;
     background: rgba(0,0,0,0.3); border: 1px solid var(--border);
@@ -745,7 +745,7 @@
   .status-loading{ background: rgba(124,58,237,0.2); color: var(--violet); animation: publishPulse .8s steps(3) infinite; }
   .status-error  { background: rgba(255,107,157,0.15); color: var(--coral); }
 
-  /* Progress bar on file chip */
+  /* Barra de progreso en chip de archivo */
   .file-chip-bar {
     width: 100%; height: 2px; background: rgba(255,255,255,0.06);
     border-radius: 0; overflow: hidden; margin-top: 3px;
@@ -756,7 +756,7 @@
     transition: width .35s cubic-bezier(.4,0,.2,1);
   }
 
-  /* File type buttons */
+  /* Botones de tipo de archivo */
   .file-type-btns {
     display: flex; gap: 6px; padding: 8px 12px 12px; flex-wrap: wrap;
   }
@@ -772,7 +772,7 @@
   .file-clear-btn { background: rgba(255,107,157,0.08); border-color: rgba(255,107,157,0.2); }
   .file-clear-btn:hover { background: rgba(255,107,157,0.2); border-color: var(--coral); color: var(--coral); }
 
-  /* Drag-and-drop overlay */
+  /* Superposición de arrastrar y soltar */
   .drop-overlay {
     position: absolute; inset: 0; z-index: 60; border-radius: 20px;
     background: rgba(124,58,237,0.18); border: 2px dashed var(--violet);
@@ -787,7 +787,7 @@
     text-shadow: 0 0 20px rgba(124,58,237,0.8);
   }
 
-  /* Context pill above input when files attached */
+  /* Píldora de contexto encima de la entrada cuando se adjuntan archivos */
   .files-context-bar {
     display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
     padding: 6px 16px 0;
@@ -813,7 +813,7 @@
   .ai-mode-btn:hover { color:var(--text); background:rgba(255,255,255,0.05); }
   .ai-mode-btn.active { background:rgba(6,182,212,0.12); color:var(--cyan); border-color:rgba(6,182,212,0.35); }
 
-  /* Review button in posts */
+  /* Botón de revisión en publicaciones */
   .btn-review {
     background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(124,58,237,0.15));
     border:1px solid rgba(6,182,212,0.3); color:var(--cyan);
@@ -824,7 +824,7 @@
   .btn-review:hover { background:rgba(6,182,212,0.25); border-color:var(--cyan); }
   .btn-review.loading { opacity:0.55; pointer-events:none; animation:publishPulse .5s steps(3) infinite; }
 
-  /* AI review result inside post card */
+  /* Resultado de revisión IA dentro de la tarjeta de publicación */
   .ai-review-bubble {
     margin-top:12px; padding:12px 14px; border-radius:12px;
     background:linear-gradient(135deg,rgba(6,182,212,0.07),rgba(124,58,237,0.09));
@@ -843,11 +843,11 @@
     padding:2px 8px; border-radius:10px; font-size:0.68rem; color:var(--cyan);
   }
 
-  /* ── CRT Scanlines overlay ── */
+  /* ── Superposición de líneas de escaneo CRT ── */
   .scanlines { display:none; }
   .pixel-grid { display:none; }
 
-  /* ── Pixel corner decorations on cards ── */
+  /* ── Decoraciones de esquina de píxeles en tarjetas ── */
   .card::after {
     content:'';
     position:absolute; bottom:0; right:0;
@@ -872,10 +872,10 @@
     opacity:0.5; pointer-events:none;
   }
 
-  /* ── Timer display - clean cyber gradient (no glitch) ── */
+  /* ── Pantalla del temporizador - gradiente cibernético limpio (sin glitch) ── */
   .timer-display { position:relative; }
 
-  /* ── Floating dots particles ── */
+  /* ── Partículas de puntos flotantes ── */
   .pixel-dust { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .px-dust {
     position:absolute; border-radius:50%;
@@ -892,7 +892,7 @@
     100% { opacity:0; transform:translateY(var(--dy,-220px)) translateX(var(--dx,30px)); }
   }
 
-  /* ── Pixel explosion canvas (pomodoro complete) ── */
+  /* ── Lienzo de explosión de píxeles (pomodoro completado) ── */
   #pixelCanvas {
     position:fixed; inset:0; z-index:997; pointer-events:none;
   }
@@ -950,7 +950,7 @@
   }
   .xp-val { font-family:'DM Sans',sans-serif; font-size:0.62rem; font-weight:700; color:var(--violet); min-width:28px; text-align:right; }
 
-  /* ── Settings Panel ── */
+  /* ── Panel de ajustes ── */
   .settings-group { margin-bottom:8px; }
   .settings-group-title {
     font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
@@ -1782,7 +1782,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── Cyber floating particles ───
+// ─── Partículas flotantes cibernéticas ───
 const starsEl = document.getElementById('stars');
 const pColors = ['rgba(56,189,248,0.9)','rgba(37,99,235,0.8)','rgba(14,165,233,0.9)','rgba(124,58,237,0.7)','rgba(103,232,249,0.8)'];
 for(let i=0;i<70;i++){
@@ -1803,7 +1803,7 @@ for(let i=0;i<70;i++){
   starsEl.appendChild(s);
 }
 
-// ─── Timer ───
+// ─── Temporizador ───
 const modes = { work:25, short:5, long:15 };
 let currentMode = 'work';
 let timeLeft = 25*60;
@@ -1923,7 +1923,7 @@ function sessionComplete() {
     showToast('☀️ ¡Pausa terminada! Hora de enfocarse.');
     aiAutoMessage('¡Pausa terminada! Recuerda tu objetivo para esta sesión. ¡Tú puedes! 🚀');
   }
-  // Reset circle
+  // Reiniciar círculo
   timeLeft = 0;
   updateCircle();
 }
@@ -1941,7 +1941,7 @@ function updateFocusStat() {
   document.getElementById('statFocus').textContent = `${h}h ${m}m`;
 }
 
-// ─── Notes ───
+// ─── Notas ───
 let notes = [];
 let completedTasks = 0;
 
@@ -1993,9 +1993,9 @@ function deleteNote(id) {
   renderNotes();
 }
 
-// ─── Orion AI (Claude API) ───────────────────────────────
+// ─── IA Orion (API de Claude) ───────────────────────────────
 let aiMode = 'mental'; // mental | estudio | trabajos
-let aiHistory = []; // conversation history for context
+let aiHistory = []; // historial de conversación para contexto
 
 const AI_SYSTEM = {
   mental: `Eres Orion, una psicóloga académica empática y cálida especializada en salud mental estudiantil. 
@@ -2034,17 +2034,17 @@ const SUGGESTIONS_BY_MODE = {
 
 function setAiMode(mode, btn) {
   aiMode = mode;
-  aiHistory = []; // reset context on mode change
+  aiHistory = []; // reiniciar contexto al cambiar de modo
   document.querySelectorAll('.ai-mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  // Update suggestions
+  // Actualizar sugerencias
   const chips = document.getElementById('aiSuggestions');
   chips.innerHTML = SUGGESTIONS_BY_MODE[mode].map(s =>
     `<span class="suggestion-chip" onclick="useSuggestion(this)">${s}</span>`
   ).join('');
 
-  // Mode announcement
+  // Anuncio de modo
   const msgs = { mental:'💚 Modo Bienestar activado. Cuéntame, ¿cómo te sientes hoy?',
                  estudio:'📖 Modo Técnicas de Estudio activado. ¿Qué quieres aprender a hacer mejor?',
                  trabajos:'🔍 Modo Revisar Trabajos activado. Comparte el título y descripción de tu trabajo o pídeme que revise los de la comunidad.' };
@@ -2054,7 +2054,7 @@ function setAiMode(mode, btn) {
 async function callClaude(userMsg, systemOverride) {
   const system = systemOverride || AI_SYSTEM[aiMode];
 
-  // Build context: inject session stats + last community posts
+  // Construir contexto: inyectar estadísticas de sesión + últimas publicaciones de la comunidad
   const statsCtx = `[Contexto del estudiante: ${completedSessions} Pomodoros completados hoy, ${Math.floor(totalFocusSeconds/60)} minutos de enfoque, ${notes.filter(n=>n.done).length} tareas completadas de ${notes.length}]`;
   const postsCtx = allPosts.length
     ? `[Últimos trabajos en la comunidad: ${allPosts.slice(0,3).map(p=>`"${p.title}" (${p.cat}): ${p.body.substring(0,80)}...`).join(' | ')}]`
@@ -2079,7 +2079,7 @@ async function callClaude(userMsg, systemOverride) {
   const data = await res.json();
   const reply = data.content?.[0]?.text || '⚠️ Sin respuesta. Intenta de nuevo.';
 
-  // Keep last 6 turns in history
+  // Mantener los últimos 6 turnos en el historial
   aiHistory.push({ role:'user', content: userMsg });
   aiHistory.push({ role:'assistant', content: reply });
   if (aiHistory.length > 12) aiHistory = aiHistory.slice(-12);
@@ -2095,7 +2095,7 @@ async function sendAiMessage() {
   input.value = '';
   input.style.height = 'auto';
 
-  // Check if asking to review community posts
+  // Verificar si está pidiendo revisar publicaciones de la comunidad
   const isReviewReq = /revis|último trabajo|último post|comunidad|compañer/i.test(text) && aiMode !== 'trabajos';
 
   showTyping();
@@ -2103,7 +2103,7 @@ async function sendAiMessage() {
     const reply = await callClaude(text, isReviewReq ? AI_SYSTEM.trabajos : null);
     removeTyping();
     appendMsg(reply, 'ai');
-    // Clear files after sending
+    // Limpiar archivos después de enviar
     if (attachedFiles.length) { clearFiles(); document.getElementById('fileTray').style.display='none'; }
   } catch(e) {
     removeTyping();
@@ -2120,7 +2120,7 @@ function useSuggestion(el) {
   sendAiMessage();
 }
 
-// ── Review a specific community post with Claude ──
+// ── Revisar una publicación específica de la comunidad con Claude ──
 async function reviewPost(postId, btnEl) {
   const post = allPosts.find(p => p.id === postId);
   if (!post) return;
@@ -2133,7 +2133,7 @@ async function reviewPost(postId, btnEl) {
   try {
     const review = await callClaude(prompt, AI_SYSTEM.trabajos);
 
-    // Inject review bubble into post card
+    // Inyectar burbuja de revisión en la tarjeta de publicación
     const card = btnEl.closest('.post-card');
     const existing = card.querySelector('.ai-review-bubble');
     if (existing) existing.remove();
@@ -2198,7 +2198,7 @@ function showToast(msg) {
 }
 
 // ════════════════════════════════════════
-// FILE ATTACHMENT SYSTEM
+// SISTEMA DE ADJUNTO DE ARCHIVOS
 // ════════════════════════════════════════
 let attachedFiles = [];
 
@@ -2328,7 +2328,7 @@ function buildMessageContent(text) {
   return content;
 }
 
-// ── Drag & Drop ──
+// ── Arrastrar y soltar ──
 const aiCard = document.querySelector('.ai-card');
 aiCard.addEventListener('dragover', e => {
   e.preventDefault();
@@ -2400,7 +2400,7 @@ function selectPlan(planName) {
 }
 
 // ════════════════════════════════════════
-// STATS PANEL
+// PANEL DE ESTADÍSTICAS
 // ════════════════════════════════════════
 
 let sessionHistory = JSON.parse(localStorage.getItem('ff_session_history') || '[]');
@@ -2522,7 +2522,7 @@ function resetStats() {
 }
 
 // ════════════════════════════════════════
-// PROJECTS PANEL
+// PANEL DE PROYECTOS
 // ════════════════════════════════════════
 
 let projects = JSON.parse(localStorage.getItem('ff_projects') || '[]');
@@ -2678,7 +2678,7 @@ function renderProjSummary() {
 }
 
 // ════════════════════════════════════════
-// SETTINGS PANEL
+// PANEL DE AJUSTES
 // ════════════════════════════════════════
 
 let appSettings = { sounds:true, noteSounds:true, autoAdvance:false, aiAuto:true, work:25, short:5, long:15, name:'',
