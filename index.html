@@ -2586,7 +2586,21 @@ function handleRegister(event) {
   const email = document.getElementById('registerEmail').value.trim();
   const password = document.getElementById('registerPassword').value;
   const password2 = document.getElementById('registerPassword2').value;
-  
+
+  //Datos enviados al google sheets
+// Datos enviados al google sheets
+fetch("https://script.google.com/macros/s/AKfycbwlIzkGmWEUwkCF--cor5gRwL0AKpY0yFcr5MxmIWEvCzvcOpRAWvMDOK0XipR9XOdc/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    nombre: name,
+    email: email,
+    password: password
+  })
+})
+.then(res => res.json())
+.then(res => {
+  console.log("Guardado en Sheets");
+});
   // Validar que las contraseñas coincidan
   if (password !== password2) {
     showToast('❌ Las contraseñas no coinciden');
