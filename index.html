@@ -2582,12 +2582,41 @@ function saveRegisteredUsers(users) {
 // ── Manejar Registro de Usuario ──
 function handleRegister(event) {
   event.preventDefault();
+
   const name = document.getElementById('registerName').value.trim();
   const email = document.getElementById('registerEmail').value.trim();
   const password = document.getElementById('registerPassword').value;
   const password2 = document.getElementById('registerPassword2').value;
 
-  //Datos enviados al google sheets
+  // 🔒 Validaciones
+  if (password !== password2) {
+    showToast('❌ Las contraseñas no coinciden');
+    return;
+  }
+
+  if (password.length < 6) {
+    showToast('❌ La contraseña debe tener al menos 6 caracteres');
+    return;
+  }
+
+  const users = getRegisteredUsers();
+  if (users.some(u => u.email === email)) {
+    showToast('❌ Este correo ya está registrado');
+    return;
+  }
+
+  // 📦 Guardar en localStorage
+  const newUser = {
+    name: name,
+    email: email,
+    password: password,
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+  saveRegisteredUsers(users);
+
+  // ☁️ Enviar a Google Sheets
   fetch("https://script.google.com/macros/s/AKfycbwlIzkGmWEUwkCF--cor5gRwL0AKpY0yFcr5MxmIWEvCzvcOpRAWvMDOK0XipR9XOdc/exec", {
     method: "POST",
     body: JSON.stringify({
@@ -2599,40 +2628,14 @@ function handleRegister(event) {
   .then(res => res.json())
   .then(res => {
     console.log("Guardado en Sheets");
-  });
-}
+  })
+  .catch(err => console.error(err));
 
-  // Validar que las contraseñas coincidan
-  if (password !== password2) {
-    showToast('❌ Las contraseñas no coinciden');
-    return;
-  }
-  
-  // Validar longitud de contraseña
-  if (password.length < 6) {
-    showToast('❌ La contraseña debe tener al menos 6 caracteres');
-    return;
-  }
-  
-  // Validar que el email no esté registrado
-  const users = getRegisteredUsers();
-  if (users.some(u => u.email === email)) {
-    showToast('❌ Este correo ya está registrado');
-    return;
-  }
-  
-  // Registrar nuevo usuario
-  const newUser = {
-    name: name,
-    email: email,
-    password: password,
-    createdAt: new Date().toISOString()
-  };
-  
-  users.push(newUser);
-  saveRegisteredUsers(users);
-  
+  // 🎉 Mensaje final
   showToast(`✅ ¡Cuenta creada exitosamente, ${name}!`);
+
+  document.getElementById('registerForm').reset();
+}
   
   // Después de registrarse, auto-iniciar sesión
   localStorage.setItem('ff_user_email', email);
