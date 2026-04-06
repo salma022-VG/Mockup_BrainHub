@@ -2588,35 +2588,35 @@ function handleRegister(event) {
   const password = document.getElementById('registerPassword').value;
   const password2 = document.getElementById('registerPassword2').value;
 
-  // 🔒 Validaciones
+  // Validaciones
   if (password !== password2) {
-    showToast('❌ Las contraseñas no coinciden');
+    alert('Las contraseñas no coinciden');
     return;
   }
 
   if (password.length < 6) {
-    showToast('❌ La contraseña debe tener al menos 6 caracteres');
+    alert('La contraseña debe tener al menos 6 caracteres');
     return;
   }
 
   const users = getRegisteredUsers();
   if (users.some(u => u.email === email)) {
-    showToast('❌ Este correo ya está registrado');
+    alert('Este correo ya está registrado');
     return;
   }
 
-  // 📦 Guardar en localStorage
+  // Guardar local
   const newUser = {
-    name: name,
-    email: email,
-    password: password,
+    name,
+    email,
+    password,
     createdAt: new Date().toISOString()
   };
 
   users.push(newUser);
   saveRegisteredUsers(users);
 
-  // ☁️ Enviar a Google Sheets
+  // Enviar a Sheets (SIN romper)
   fetch("https://script.google.com/macros/s/AKfycbwlIzkGmWEUwkCF--cor5gRwL0AKpY0yFcr5MxmIWEvCzvcOpRAWvMDOK0XipR9XOdc/exec", {
     method: "POST",
     body: JSON.stringify({
@@ -2625,11 +2625,13 @@ function handleRegister(event) {
       password: password
     })
   })
-  .then(res => res.json())
-  .then(res => {
-    console.log("Guardado en Sheets");
-  })
-  .catch(err => console.error(err));
+  .then(res => res.text()) // 🔥 IMPORTANTE
+  .then(() => console.log("Guardado en Sheets"))
+  .catch(err => console.error("Error:", err));
+
+  alert(`Cuenta creada: ${name}`);
+  document.getElementById('registerForm').reset();
+}
 
   // 🎉 Mensaje final
   showToast(`✅ ¡Cuenta creada exitosamente, ${name}!`);
