@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: brainhub-postgres
+    environment:
+      POSTGRES_USER: brainhub_user
+      POSTGRES_PASSWORD: brainhub_password  # Cambiar en producción
+      POSTGRES_DB: brainhub_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema_v3_brainhub.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U brainhub_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - brainhub-network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: brainhub-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      POSTGRES_USER: brainhub_user
+      POSTGRES_PASSWORD: brainhub_password
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: brainhub_db
+      SECRET_KEY: dev-secret-key-change-in-production
+      ENVIRONMENT: development
+      DEBUG: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - brainhub-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: brainhub-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/brainhub.conf:/etc/nginx/conf.d/default.conf
+      - ./index.html:/var/www/brainhub/index.html
+    depends_on:
+      - backend
+    networks:
+      - brainhub-network
+
+volumes:
+  postgres_data:
+
+networks:
+  brainhub-network:
+    driver: bridge
