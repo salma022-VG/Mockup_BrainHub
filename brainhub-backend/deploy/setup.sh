@@ -79,7 +79,7 @@ echo ""
 echo "🌐 Paso 6: Configurar Nginx..."
 
 # Copiar configuración de Nginx
-cp nginx/brainhub.conf /etc/nginx/sites-available/brainhub
+cp /opt/brainhub/nginx/brainhub.conf /etc/nginx/sites-available/brainhub
 ln -sf /etc/nginx/sites-available/brainhub /etc/nginx/sites-enabled/brainhub
 
 # Eliminar default site
@@ -87,7 +87,8 @@ rm -f /etc/nginx/sites-enabled/default
 
 # Crear directorio para frontend
 mkdir -p /var/www/brainhub
-cp index.html /var/www/brainhub/  # Copiar el HTML del frontend
+cp /opt/brainhub/index.html /var/www/brainhub/
+chown -R www-data:www-data /var/www/brainhub
 
 # Verificar sintaxis Nginx
 nginx -t

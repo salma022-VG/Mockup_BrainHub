@@ -92,7 +92,7 @@ async def enviar_mensaje(
     db: Session = Depends(get_db)
 ):
     """
-    Envía un mensaje al chat y obtiene respuesta de Claude
+    Envía un mensaje al chat y obtiene respuesta de IA (Claude o Falcon)
     """
     # Verificar que el chat pertenece al usuario
     chat = db.query(ChatIA).filter(
@@ -118,30 +118,22 @@ async def enviar_mensaje(
         MensajeChat.chat_id == chat_id
     ).all()
     
-    # Construir mensajes para Claude
-    messages = [
-        {"role": msg.rol.value, "content": msg.contenido}
-        for msg in mensajes_previos
-    ]
-    
     try:
-        # Llamar a Claude API
-        response = client.messages.create(
-            model="claude-opus-4-1",
-            max_tokens=1024,
-            system="Eres Orion, asistente IA de BrainHub Studio. Eres empática, motivadora y ayudas a estudiantes con productividad, salud mental y técnicas de estudio.",
-            messages=messages
-        )
-        
-        # Extraer respuesta
-        respuesta = response.content[0].text
+        if IA_PROVIDER == "anthropic":
+            respuesta = await _call_claude(mensajes_previos)
+            modelo = "claude-opus-4-1"
+        elif IA_PROVIDER == "falcon":
+            respuesta = await _call_falcon(mensajes_previos)
+            modelo = "falcon-7b"
+        else:
+            raise ValueError(f"Proveedor de IA no válido: {IA_PROVIDER}")
         
         # Guardar respuesta en BD
         ai_msg = MensajeChat(
             chat_id=chat_id,
             rol=RolMensaje.ASSISTANT,
             contenido=respuesta,
-            modelo_ia="claude-opus-4-1"
+            modelo_ia=modelo
         )
         db.add(ai_msg)
         db.commit()
@@ -149,14 +141,63 @@ async def enviar_mensaje(
         
         return {
             "user_message": user_msg.dict(),
-            "ai_response": ai_msg.dict()
+            "ai_response": ai_msg.dict(),
+            "provider": IA_PROVIDER
         }
     
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error al llamar a Claude API: {str(e)}"
+            detail=f"Error al llamar a IA ({IA_PROVIDER}): {str(e)}"
         )
+
+
+async def _call_claude(mensajes_previos):
+    """
+    Llama a Claude API de Anthropic
+    """
+    messages = [
+        {"role": msg.rol.value, "content": msg.contenido}
+        for msg in mensajes_previos
+    ]
+    
+    response = client.messages.create(
+        model="claude-opus-4-1",
+        max_tokens=1024,
+        system="Eres Orion, asistente IA de BrainHub Studio. Eres empática, motivadora y ayudas a estudiantes con productividad, salud mental y técnicas de estudio.",
+        messages=messages
+    )
+    
+    return response.content[0].text
+
+
+async def _call_falcon(mensajes_previos):
+    """
+    Llama a Falcon 7B (local o remoto)
+    """
+    # Construir prompt con historial
+    prompt = "Eres Orion, asistente académico empático.\n\n"
+    for msg in mensajes_previos:
+        prompt += f"{msg.rol.value.upper()}: {msg.contenido}\n"
+    prompt += "ASSISTANT: "
+    
+    try:
+        # Llamar al servidor Falcon (puede ser local en puerto 8001 o remoto)
+        response = requests.post(
+            f"{settings.FALCON_API_URL}/v1/completions",
+            json={
+                "model": "falcon-7b",
+                "prompt": prompt,
+                "max_tokens": 512,
+                "temperature": 0.7
+            },
+            timeout=30
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data.get("choices", [{}])[0].get("text", "Sin respuesta")
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Error conectando a Falcon: {str(e)}")
 
 
 @router.delete("/chats/{chat_id}")

@@ -9,6 +9,7 @@
 - [Instalación Local](#instalación-local)
 - [Despliegue en AWS](#despliegue-en-aws)
 - [Configuración](#configuración)
+- [Integración de IA](#integración-de-ia)
 - [API Endpoints](#api-endpoints)
 - [Base de Datos](#base-de-datos)
 - [Troubleshooting](#troubleshooting)
@@ -254,6 +255,71 @@ POSTGRES_DB=brainhub_db
 1. Crear RDS PostgreSQL (Multi-AZ, backup automático)
 2. Crear security group que permita acceso desde EC2
 3. Copiar endpoint en POSTGRES_HOST
+
+---
+
+## 🤖 Integración de IA
+
+BrainHub Studio incluye integración con **Orion**, un asistente IA empático que ayuda a estudiantes con productividad, salud mental y técnicas de estudio.
+
+### Proveedores Soportados
+
+| Proveedor | Modelo | Costo | Latencia | Configuración |
+|-----------|--------|-------|----------|---------------|
+| **Anthropic Claude** | Opus 4.1 | Alto | Baja | API Key requerida |
+| **Falcon 7B** | Local/Remoto | Bajo | Variable | Servidor propio |
+
+### Configuración de IA
+
+```env
+# Proveedor de IA (anthropic o falcon)
+IA_PROVIDER=anthropic
+
+# Para Claude (Anthropic)
+ANTHROPIC_API_KEY=sk-ant-api03-...
+
+# Para Falcon 7B (local o remoto)
+FALCON_API_URL=http://localhost:8001
+```
+
+### Endpoints de IA
+
+```http
+POST   /ia/chats                    # Crear nuevo chat
+GET    /ia/chats                    # Listar chats del usuario
+GET    /ia/chats/{chat_id}          # Obtener chat específico
+POST   /ia/chats/{chat_id}/mensajes # Enviar mensaje y obtener respuesta
+```
+
+### Configuración de Falcon 7B
+
+Para usar Falcon 7B localmente:
+
+1. **Instalar servidor Falcon:**
+```bash
+pip install transformers torch
+pip install fastapi uvicorn
+```
+
+2. **Crear servidor Falcon:**
+```python
+# falcon_server.py
+from fastapi import FastAPI
+from transformers import pipeline
+
+app = FastAPI()
+generator = pipeline('text-generation', model='tiiuae/falcon-7b-instruct')
+
+@app.post("/v1/completions")
+def generate_completion(prompt: str, max_tokens: int = 512):
+    result = generator(prompt, max_length=max_tokens, do_sample=True, temperature=0.7)
+    return {"choices": [{"text": result[0]['generated_text']}]}
+```
+
+3. **Ejecutar servidor:**
+```bash
+uvicorn falcon_server:app --host 0.0.0.0 --port 8001
+```
 
 ---
 
