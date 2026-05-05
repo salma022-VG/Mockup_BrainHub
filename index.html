@@ -1234,16 +1234,16 @@
 <div class="app">
   <!-- NAV -->
   <nav>
-    <div class="logo" onclick="goHome()">
-      <div class="logo-icon">⚡</div>
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
       BrainHub
     </div>
     <div class="nav-links">
-      <button class="active" onclick="switchTab(this,'timer')">⏱ Timer</button>
-      <button onclick="switchTab(this,'stats')">📊 Estadísticas</button>
-      <button onclick="switchTab(this,'projects')">🚀 Proyectos</button>
-      <button onclick="switchTab(this,'community')">👥 Comunidad</button>
-      <button onclick="switchTab(this,'settings')">⚙️ Ajustes</button>
+      <a href="#timer"><button class="active">⏱ Timer</button></a>
+      <a href="#estadisticas"><button>📊 Estadísticas</button></a>
+      <a href="#proyectos"><button>🚀 Proyectos</button></a>
+      <a href="#comunidad"><button>👥 Comunidad</button></a>
+      <a href="#ajustes"><button>⚙️ Ajustes</button></a>
     </div>
     <div id="userDisplay"></div>
     <button id="loginNavBtn" class="nav-cta" onclick="openLogin()" style="display:none;">🔐 Iniciar sesión</button>
@@ -2717,7 +2717,7 @@ window.addEventListener('load', function() {
 
 
 // ════════════════════════════════════════
-// PANEL DE ESTADÍSTICAS
+// SISTEMA DE ESTADÍSTICAS
 // ════════════════════════════════════════
 
 let sessionHistory = JSON.parse(localStorage.getItem('ff_session_history') || '[]');
@@ -2758,7 +2758,6 @@ function renderStats() {
   const todaySessions = sessionHistory.filter(s => new Date(s.ts).toDateString() === today && s.mode === 'work');
   const hourBuckets = Array(24).fill(0);
   todaySessions.forEach(s => hourBuckets[s.h]++);
-  const hours = Array.from({length:17}, (_,i) => i+6);
   const maxBucket = Math.max(...hours.map(h => hourBuckets[h]), 1);
   const chart  = document.getElementById('s-chart');
   if (chart) {
@@ -3166,7 +3165,6 @@ async function loadPosts() {
     let indexRaw;
     try { indexRaw = await window.storage.get('post-index', true); } catch(e){}
     const index = indexRaw ? JSON.parse(indexRaw.value) : [];
-
     allPosts = [];
     for (const id of index.slice(0, 30)) {
       try {
