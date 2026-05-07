@@ -1,0 +1,24 @@
+[Unit]
+Description=BrainHub API Backend
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/brainhub/backend
+Environment="PATH=/var/www/brainhub/backend/venv/bin"
+EnvironmentFile=/var/www/brainhub/backend/.env
+ExecStart=/var/www/brainhub/backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 4
+Restart=always
+RestartSec=10
+
+# Seguridad
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/www/brainhub/backend/logs
+
+[Install]
+WantedBy=multi-user.target
